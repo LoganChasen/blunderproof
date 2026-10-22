@@ -21,6 +21,8 @@ export interface EvalResult {
 export interface AnalyzeOptions {
   depth: number;
   multiPv?: number;
+  /** Optional time cap; the search stops at `depth` or this, whichever is first. */
+  movetimeMs?: number;
 }
 
 /** Parse a UCI "info ... multipv K score cp X ... pv m1 m2" line. Returns null for other info lines. */
@@ -120,7 +122,7 @@ export class Engine {
       };
       this.listeners.push(collect);
       const done = this.waitFor((l) => l.startsWith("bestmove"));
-      this.send(`go depth ${opts.depth}`);
+      this.send(`go depth ${opts.depth}` + (opts.movetimeMs ? ` movetime ${opts.movetimeMs}` : ""));
       await done;
       this.listeners = this.listeners.filter((l) => l !== collect);
 

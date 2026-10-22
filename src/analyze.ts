@@ -100,7 +100,7 @@ export async function analyzeGame(game: ChessComGame, username: string, engine: 
   const playerColor: Color = game.white.username.toLowerCase() === username.toLowerCase() ? "w" : "b";
   const me = playerColor === "w" ? game.white : game.black;
   const them = playerColor === "w" ? game.black : game.white;
-  const { fastDepth, deepDepth, multiPv } = config.engine;
+  const { fastDepth, deepDepth, deepMaxMs, multiPv } = config.engine;
 
   // Positions 0..n: before each move, plus the final position.
   const fens = [...parsed.moves.map((m) => m.fenBefore), parsed.moves.at(-1)?.fenAfter ?? parsed.startFen];
@@ -131,7 +131,7 @@ export async function analyzeGame(game: ChessComGame, username: string, engine: 
   // Deep pass: the player's moves that looked like an inaccuracy or worse.
   for (const [i, mv] of moves.entries()) {
     if (mv.color !== playerColor || mv.drop < config.labels.inaccuracy) continue;
-    const before = await engine.analyze(mv.fenBefore, { depth: deepDepth, multiPv });
+    const before = await engine.analyze(mv.fenBefore, { depth: deepDepth, multiPv, movetimeMs: deepMaxMs });
     const top = toTopMoves(before.lines, mv.fenBefore);
     const winBefore = winFromEval(before, mv.fenBefore);
     // If the played move is one of the top lines, use that same search's score
@@ -139,7 +139,7 @@ export async function analyzeGame(game: ChessComGame, username: string, engine: 
     const played = top.find((t) => t.move === mv.uci);
     const winAfter =
       played?.winPercent ??
-      100 - winFromEval(await engine.analyze(fens[i + 1]!, { depth: deepDepth, multiPv: 1 }), fens[i + 1]!);
+      100 - winFromEval(await engine.analyze(fens[i + 1]!, { depth: deepDepth, multiPv: 1, movetimeMs: deepMaxMs }), fens[i + 1]!);
     const drop = Math.max(0, winBefore - winAfter);
     moves[i] = {
       ...mv,
@@ -175,9 +175,9 @@ export async function analyzeGame(game: ChessComGame, username: string, engine: 
 
 /** Cache key = game + engine version + depths, so changing any of them re-analyzes. */
 function cachePath(cacheDir: string, game: ChessComGame, engineName: string): string {
-  const { fastDepth, deepDepth, multiPv } = config.engine;
+  const { fastDepth, deepDepth, deepMaxMs, multiPv } = config.engine;
   const engineSlug = engineName.replace(/[^a-z0-9.]+/gi, "-");
-  return join(cacheDir, `${gameIdOf(game)}_${engineSlug}_d${fastDepth}-${deepDepth}_pv${multiPv}.json`);
+  return join(cacheDir, `${gameIdOf(game)}_${engineSlug}_d${fastDepth}-${deepDepth}-${deepMaxMs}ms_pv${multiPv}.json`);
 }
 
 /** analyzeGame with a permanent on-disk cache. Never re-analyzes a game. */

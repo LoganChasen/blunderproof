@@ -15,10 +15,12 @@ export const config = {
     /** Fast pass over every move, used to find candidate errors. */
     fastDepth: 12,
     /** Deep pass on candidates only, to confirm before we call anything a blunder. */
-    deepDepth: 18,
+    deepDepth: 16,
+    /** Time cap per deep search (ms): the search stops at deepDepth or this, whichever comes first. */
+    deepMaxMs: 500,
     /** Number of top moves to keep per position (needed for the checkpoint gap and pass rule). */
     multiPv: 3,
-    threads: 2,
+    threads: 4,
     hashMb: 128,
   },
 
