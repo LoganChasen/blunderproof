@@ -4,7 +4,7 @@ import { analyzeGame, type GameAnalysis } from "../src/analyze";
 import type { ChessComGame } from "../src/chesscom";
 import { browserThreadCount } from "../src/web/engine/browserEngine";
 import { browserEngineName, EngineStoppedError, UciSession, type UciTransport } from "../src/web/engine/uciCore";
-import { gameLabel, markAccountConnected, mergeAnalyses, pickUncached, sortNewestFirst } from "../src/web/analysis/queue";
+import { gameLabel, markAccountConnected, mergeAnalyses, pickRecentUncached, pickUncached, sortNewestFirst } from "../src/web/analysis/queue";
 import { toProfile } from "../src/web/analysis/profile";
 
 function game(id: string, endTime: number, white = "me", black = "opp"): ChessComGame {
@@ -41,6 +41,15 @@ describe("queue helpers", () => {
     const picked = pickUncached(games, new Set(["4"]), 2, new Set(["3"]));
     expect(picked.map((g) => g.uuid)).toEqual(["u2", "u1"]);
     expect(pickUncached(games, new Set(), 0)).toEqual([]);
+  });
+
+  it("on page load, only fills gaps in the newest window (doesn't dig older every visit)", () => {
+    const games = [game("1", 100), game("2", 200), game("3", 300), game("4", 400)];
+    // The newest 2 are cached, so nothing to do, even though older games are uncached.
+    expect(pickRecentUncached(games, new Set(["4", "3"]), 2)).toEqual([]);
+    // A newly played game shows up in the window and gets analyzed.
+    const withNew = [...games, game("5", 500)];
+    expect(pickRecentUncached(withNew, new Set(["4", "3"]), 2).map((g) => g.uuid)).toEqual(["u5"]);
   });
 
   it("labels the opponent from either side", () => {

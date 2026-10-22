@@ -39,6 +39,9 @@ export function Board({ fen, orientation = "white", onMove, onSquareClick, squar
           animationDurationInMs: 180,
           darkSquareStyle: { backgroundColor: "var(--board-dark)" },
           lightSquareStyle: { backgroundColor: "var(--board-light)" },
+          // Coordinates in the opposite square color, bold, like a chess site.
+          darkSquareNotationStyle: { color: "var(--board-light)", fontWeight: 700 },
+          lightSquareNotationStyle: { color: "var(--board-dark)", fontWeight: 700 },
           squareStyles: squareStyles ?? {},
           arrows: (arrows ?? []).map((a) => ({ startSquare: a.from, endSquare: a.to, color: a.color ?? "rgb(59 142 232 / 0.85)" })),
           onPieceDrop: ({ sourceSquare, targetSquare, piece }) =>

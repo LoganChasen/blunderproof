@@ -12,7 +12,7 @@ import type { AnalysisState, ApiError, PlayerApiResponse } from "../types";
 import { startBrowserEngine, type BrowserEngine } from "../engine/browserEngine";
 import { EngineStoppedError } from "../engine/uciCore";
 import { getManyCachedAnalyses, putCachedAnalysis } from "./cache";
-import { DEFAULT_BATCH, gameLabel, markAccountConnected, mergeAnalyses, pickUncached } from "./queue";
+import { DEFAULT_BATCH, gameLabel, markAccountConnected, mergeAnalyses, pickRecentUncached, pickUncached } from "./queue";
 
 class FriendlyError extends Error {}
 
@@ -130,7 +130,7 @@ export class AnalysisController {
       this.publishGames();
 
       const exclude = new Set([...this.failed, ...(this.inFlight ? [this.inFlight] : [])]);
-      this.queue = pickUncached(this.allGames, new Set(this.analyzed.keys()), DEFAULT_BATCH, exclude);
+      this.queue = pickRecentUncached(this.allGames, new Set(this.analyzed.keys()), DEFAULT_BATCH, exclude);
       const done = this.analyzedCount();
       this.set({
         progress: { done, total: done + this.queue.length + (this.inFlight ? 1 : 0), current: this.state.progress.current },

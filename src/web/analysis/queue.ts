@@ -36,6 +36,21 @@ export function pickUncached(
     .slice(0, Math.max(0, count));
 }
 
+/**
+ * Games to analyze on page load: the uncached ones among the `window` newest
+ * games. This picks up newly played games without digging further back on
+ * every visit. Older games are analyzed only via analyzeMore().
+ */
+export function pickRecentUncached(
+  games: ChessComGame[],
+  analyzedIds: ReadonlySet<string>,
+  window: number,
+  exclude: ReadonlySet<string> = new Set(),
+): ChessComGame[] {
+  const newest = [...games].sort((a, b) => b.end_time - a.end_time).slice(0, Math.max(0, window));
+  return pickUncached(newest, analyzedIds, window, exclude);
+}
+
 /** "vs Knuuuugen (bullet)" for the game being analyzed. */
 export function gameLabel(game: ChessComGame, username: string): string {
   const white = game.white.username.toLowerCase() === username.toLowerCase();

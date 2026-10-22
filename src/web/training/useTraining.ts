@@ -33,6 +33,8 @@ export function useTraining(username: string) {
   const analysis = useAnalysis();
   const [session, setSession] = useState<Session | null>(null);
   const [item, setItem] = useState<TrainingItem | null>(null);
+  /** Bumps each time a new item is served. Used as the React key, so a move inside an item never remounts it. */
+  const [serial, setSerial] = useState(0);
   const [phase, setPhase] = useState<TrainingPhase>("starting");
   const [error, setError] = useState<string | null>(null);
   const [lastDelta, setLastDelta] = useState<{ delta: number; key: number } | null>(null);
@@ -71,6 +73,7 @@ export function useTraining(username: string) {
       commit(r.session);
       if (!r.item) throw new Error("No puzzles available right now.");
       setItem(r.item);
+      setSerial((n) => n + 1);
       setPhase("ready");
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
@@ -131,5 +134,5 @@ export function useTraining(username: string) {
     [session, checkpoints],
   );
 
-  return { analysis, session, item, phase, error, advance, finishDrill, finishCheckpoint, availability, lastDelta };
+  return { analysis, session, item, serial, phase, error, advance, finishDrill, finishCheckpoint, availability, lastDelta };
 }

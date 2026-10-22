@@ -1,7 +1,6 @@
 "use client";
 /** /u/[username]/train: drills weighted to the player's weaknesses, with a checkpoint every 10–15. */
 import { Button, Spinner } from "../ui";
-import { checkpointId } from "../types";
 import { CheckpointPlayer } from "./CheckpointPlayer";
 import { DrillPlayer } from "./DrillPlayer";
 import { CheckpointTracker, SessionStats, TrainingStyles } from "./parts";
@@ -78,7 +77,7 @@ export function TrainingScreen({ username }: { username: string }) {
       <TrainingStyles />
       {item?.kind === "drill" && (
         <DrillPlayer
-          key={`d:${item.puzzle.id}`}
+          key={`d:${t.serial}`}
           item={item}
           onComplete={(solved) => t.finishDrill(item as DrillItem, solved)}
           onNext={next}
@@ -89,7 +88,7 @@ export function TrainingScreen({ username }: { username: string }) {
       )}
       {item?.kind === "checkpoint" && (
         <CheckpointPlayer
-          key={`c:${checkpointId(item.checkpoint)}:${session.checkpointsAttempted}`}
+          key={`c:${t.serial}`}
           checkpoint={item.checkpoint}
           onAttempt={(uci) => t.finishCheckpoint(item.checkpoint, uci)}
           onNext={next}
