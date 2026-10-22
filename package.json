@@ -1,0 +1,30 @@
+{
+  "name": "blunderproof",
+  "version": "1.0.0",
+  "description": "Turn your own chess blunders into training.",
+  "scripts": {
+    "test": "vitest run",
+    "phase0": "tsx scripts/phase0.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoganChasen/blunderproof.git"
+  },
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/LoganChasen/blunderproof/issues"
+  },
+  "homepage": "https://github.com/LoganChasen/blunderproof#readme",
+  "private": true,
+  "dependencies": {
+    "chess.js": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  }
+}
