@@ -2,7 +2,7 @@
 
 Turn your own chess mistakes into training.
 
-Enter your Chess.com username. Blunderproof analyzes your recent games with Stockfish and tells you **what** you blunder and **why** (hanging pieces, missed captures, missed mates, back-rank problems). It then drills you on puzzles that match those weaknesses. About every 10 puzzles you hit a **checkpoint**: the exact position from one of your own games, right before you blundered. Find the right move to pass.
+Enter your Chess.com username. Blunderproof analyzes your recent games with Stockfish and tells you **what** you blunder and **why** (hanging pieces, missed captures, missed mates, back-rank problems). It then drills you on puzzles that match those weaknesses. Every 10–15 puzzles you hit a **checkpoint**: the exact position from one of your own games, right before you blundered. Find the right move to pass.
 
 > Other tools give you puzzles. Blunderproof drills a pattern, then makes you beat the exact position you lost in.
 
