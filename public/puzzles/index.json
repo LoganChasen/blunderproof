@@ -1,0 +1,42 @@
+{
+  "builtAt": "2026-10-22T01:27:09.110Z",
+  "source": "Lichess puzzle database (CC0), https://database.lichess.org/#puzzles",
+  "filters": {
+    "minPopularity": 85,
+    "minPlays": 300,
+    "maxRatingDeviation": 100,
+    "ratingMin": 500,
+    "ratingMax": 2900,
+    "bandSize": 100,
+    "perBand": 75
+  },
+  "format": [
+    "id",
+    "fen",
+    "moves",
+    "rating",
+    "popularity",
+    "themes"
+  ],
+  "counts": {
+    "backRankMate": 1408,
+    "capturingDefender": 1535,
+    "defensiveMove": 1735,
+    "deflection": 1741,
+    "discoveredAttack": 1800,
+    "endgame": 1800,
+    "fork": 1800,
+    "hangingPiece": 1793,
+    "kingsideAttack": 1800,
+    "mateIn1": 1306,
+    "mateIn2": 1557,
+    "mateIn3": 1649,
+    "mateIn4": 1504,
+    "pawnEndgame": 1800,
+    "pin": 1766,
+    "quietMove": 1800,
+    "rookEndgame": 1800,
+    "skewer": 1755,
+    "trappedPiece": 1556
+  }
+}
