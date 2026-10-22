@@ -31,6 +31,11 @@ export const config = {
     minMaterialGain: 2,
   },
 
+  patterns: {
+    /** Longer forced mates aren't something a human is expected to find, so they don't count as "missed mate". */
+    maxMissedMateLength: 5,
+  },
+
   /** A checkpoint attempt passes if it is within this many win% points of the top move. */
   passMargin: 2,
 
