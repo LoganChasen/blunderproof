@@ -1,9 +1,7 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { join } from "node:path";
 import { Chess } from "chess.js";
 import { config } from "./config.js";
 import type { ChessComGame } from "./chesscom.js";
-import type { Engine, EngineLine, EvalResult } from "./engine.js";
+import type { EngineLine, EvalResult, UciEngine } from "./uci.js";
 import { parsePgn, type Color, type ParsedMove } from "./pgn.js";
 import { scoreToWinPercent, type Score } from "./winPercent.js";
 
@@ -101,7 +99,7 @@ function toTopMoves(lines: EngineLine[], fen: string): TopMove[] {
  *  2. Deep pass: candidates re-checked at high depth with MultiPV, so only
  *     errors that survive a serious search get labeled.
  */
-export async function analyzeGame(game: ChessComGame, username: string, engine: Engine): Promise<GameAnalysis> {
+export async function analyzeGame(game: ChessComGame, username: string, engine: UciEngine): Promise<GameAnalysis> {
   const started = Date.now();
   const parsed = parsePgn(game.pgn!);
   const playerColor: Color = game.white.username.toLowerCase() === username.toLowerCase() ? "w" : "b";
@@ -190,27 +188,8 @@ export async function analyzeGame(game: ChessComGame, username: string, engine: 
 }
 
 /** Cache key = game + engine version + depths, so changing any of them re-analyzes. */
-function cachePath(cacheDir: string, game: ChessComGame, engineName: string): string {
+export function analysisCacheKey(game: Pick<ChessComGame, "url" | "uuid">, engineName: string): string {
   const { fastDepth, deepDepth, deepMaxMs, multiPv } = config.engine;
   const engineSlug = engineName.replace(/[^a-z0-9.]+/gi, "-");
-  return join(cacheDir, `${gameIdOf(game)}_${engineSlug}_d${fastDepth}-${deepDepth}-${deepMaxMs}ms_pv${multiPv}_v2.json`);
-}
-
-/** analyzeGame with a permanent on-disk cache. Never re-analyzes a game. */
-export async function analyzeGameCached(
-  game: ChessComGame,
-  username: string,
-  engine: Engine,
-  cacheDir: string,
-): Promise<GameAnalysis & { cached: boolean }> {
-  const file = cachePath(cacheDir, game, engine.name);
-  try {
-    return { ...(JSON.parse(await readFile(file, "utf8")) as GameAnalysis), cached: true };
-  } catch {
-    // Not cached.
-  }
-  const result = await analyzeGame(game, username, engine);
-  await mkdir(cacheDir, { recursive: true });
-  await writeFile(file, JSON.stringify(result));
-  return { ...result, cached: false };
+  return `${gameIdOf(game as ChessComGame)}_${engineSlug}_d${fastDepth}-${deepDepth}-${deepMaxMs}ms_pv${multiPv}_v2`;
 }

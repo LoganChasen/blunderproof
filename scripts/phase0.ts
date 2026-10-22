@@ -7,7 +7,8 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { parseArgs } from "node:util";
-import { analyzeGameCached, type GameAnalysis } from "../src/analyze.js";
+import type { GameAnalysis } from "../src/analyze.js";
+import { analyzeGameCached } from "../src/analyzeCache.js";
 import { fetchRecentGames, PlayerNotFoundError } from "../src/chesscom.js";
 import { config } from "../src/config.js";
 import { Engine } from "../src/engine.js";
