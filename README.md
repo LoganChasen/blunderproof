@@ -10,17 +10,37 @@ Works with your Chess.com account. Not affiliated with Chess.com or Lichess.
 
 ## Status
 
-**Phase 0: analysis prototype (command line).** This proves blunder detection, pattern tagging and checkpoint selection on real games before any UI gets built. See [`docs/HANDOFF.md`](docs/HANDOFF.md) for the full plan.
+**v1 web app built.** Enter any Chess.com username and Blunderproof:
 
-## Running Phase 0
+1. **Analyzes your games in your browser.** Stockfish 19 (WASM) runs in a Web Worker, so there's no server cost. It does your 20 most recent games first, the report updates live as each game finishes, and results are cached in IndexedDB.
+2. **Shows a blunder report:** what you blunder (hanging pieces, missed captures, missed mates, back-rank problems), when (game phase, clock), and every blunder on a mini board with an explanation.
+3. **Trains you.** Lichess puzzles are weighted toward your weaknesses, and **every 10–15 puzzles a checkpoint appears: the exact position from one of your own games right before you blundered.** Play the engine's move (or one within 2 win%) to conquer it. Miss it and you see the best move and the game link, and the position comes back later.
+4. **Tracks metrics:** puzzles solved, checkpoint pass rate, puzzle rating, and blunders per game over time.
 
-Requirements: Node 20+ and a native Stockfish binary on your `PATH` (`brew install stockfish`).
+See [`docs/HANDOFF.md`](docs/HANDOFF.md) for the product spec and [`docs/BUILD-BRIEF.md`](docs/BUILD-BRIEF.md) for the architecture.
+
+## Running it
+
+Requirements: Node 20+.
 
 ```bash
 npm install
-npm run phase0 -- <chess.com username>
-npm test
+npm run dev          # http://localhost:3000, then type any Chess.com username
+npm test             # 133 unit tests
+npm run build && npm start   # production build
 ```
+
+### Phase 0 command-line report (optional)
+
+This needs a native Stockfish on your `PATH` (`brew install stockfish`).
+
+```bash
+npm run phase0 -- <chess.com username> [--games 100]   # writes out/<user>/report.md
+```
+
+### Rebuilding the puzzle packs (optional)
+
+The curated packs in `public/puzzles/` are committed. To rebuild them, download `lichess_db_puzzle.csv.zst` from database.lichess.org into `.cache/puzzles/` and run `npx tsx scripts/build-puzzles.ts`.
 
 ## Credits
 
