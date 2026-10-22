@@ -1,7 +1,7 @@
 import type { GameAnalysis, MoveAnalysis } from "./analyze.js";
 import { selectCheckpoints, type Checkpoint } from "./checkpoints.js";
 import { moveContext, type MoveContext } from "./context.js";
-import { classify, PATTERN_LABEL } from "./patterns/index.js";
+import { classify, PATTERN_LABEL, PATTERN_PHRASE } from "./patterns/index.js";
 import type { Pattern } from "./patterns/types.js";
 
 export interface PlayerError {
@@ -111,6 +111,13 @@ function breakdownTable(title: string, rows: [string, number][], total: number):
   return lines.join("\n");
 }
 
+/** "<30s" → "under 30 seconds", "60s+" → "over 60 seconds". */
+function clockPhrase(bucket: string): string {
+  const m = bucket.match(/^(<)?(\d+)s(\+)?$/);
+  if (!m) return "an unknown time";
+  return `${m[1] ? "under" : "over"} ${m[2]} seconds`;
+}
+
 /** One or two plain-English sentences, like the handoff's example. */
 export function plainSummary(r: ReportData): string {
   const blunders = r.errors.filter((e) => e.label === "blunder");
@@ -118,11 +125,11 @@ export function plainSummary(r: ReportData): string {
   const byPattern = tally(blunders.map((b) => b.pattern)).filter(([p]) => p !== "other");
   const byPhase = tally(blunders.map((b) => b.context.phase));
   const byClock = tally(blunders.map((b) => b.context.clockBucket ?? "unknown"));
-  const parts = byPattern.slice(0, 2).map(([p, n]) => `${pct(n, blunders.length)} of your blunders are ${PATTERN_LABEL[p].toLowerCase()}`);
+  const parts = byPattern.slice(0, 2).map(([p, n], i) => `${pct(n, blunders.length)}${i === 0 ? " of your blunders" : ""} are ${PATTERN_PHRASE[p]}`);
   const first = parts.length ? parts.join(", ") + "." : "Most of your blunders don't fit a named pattern yet.";
   const [phase] = byPhase[0]!;
   const [clock] = byClock[0]!;
-  return `${first[0]!.toUpperCase()}${first.slice(1)} Most happen in the ${phase} with ${clock === "60s+" ? "over a minute" : clock.replace("<", "under ")} on the clock.`;
+  return `${first[0]!.toUpperCase()}${first.slice(1)} Most happen in the ${phase} with ${clockPhrase(clock)} on the clock.`;
 }
 
 export function renderMarkdown(r: ReportData): string {

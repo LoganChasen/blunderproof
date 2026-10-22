@@ -14,6 +14,15 @@ export const PATTERN_LABEL: Record<Pattern, string> = {
   other: "Other",
 };
 
+/** Plural phrase for sentences: "34% of your blunders are hanging pieces". */
+export const PATTERN_PHRASE: Record<Pattern, string> = {
+  "missed-mate": "missed mates",
+  "back-rank": "back-rank problems",
+  "hanging-piece": "hanging pieces",
+  "missed-capture": "missed captures",
+  other: "unclassified",
+};
+
 /**
  * Priority order: when several patterns match, the first one is the primary
  * tag. Mates come first because they're the most decisive explanation.
