@@ -15,6 +15,8 @@ export interface TopMove {
   score: Score;
   /** Mover's win% if this move is played. */
   winPercent: number;
+  /** Engine's expected continuation in UCI, starting with this move. */
+  pv: string[];
 }
 
 export interface MoveAnalysis extends ParsedMove {
@@ -30,6 +32,11 @@ export interface MoveAnalysis extends ParsedMove {
   label: MoveLabel;
   /** True if this move got the deep confirmation pass. */
   deep: boolean;
+  /**
+   * Deep-checked moves only: the engine's expected continuation after the
+   * move that was actually played, starting with the opponent's reply.
+   */
+  refutation: string[] | null;
 }
 
 export interface GameAnalysis {
@@ -84,7 +91,7 @@ function toTopMoves(lines: EngineLine[], fen: string): TopMove[] {
     } catch {
       // Keep UCI if chess.js disagrees (shouldn't happen).
     }
-    return { move: l.move, san, score: l.score, winPercent: scoreToWinPercent(l.score) };
+    return { move: l.move, san, score: l.score, winPercent: scoreToWinPercent(l.score), pv: l.pv };
   });
 }
 
@@ -125,6 +132,7 @@ export async function analyzeGame(game: ChessComGame, username: string, engine: 
       drop,
       label: isBest ? "best" : labelForDrop(drop),
       deep: false,
+      refutation: null,
     };
   });
 
@@ -137,9 +145,16 @@ export async function analyzeGame(game: ChessComGame, username: string, engine: 
     // If the played move is one of the top lines, use that same search's score
     // (more consistent); otherwise search the position after the move.
     const played = top.find((t) => t.move === mv.uci);
-    const winAfter =
-      played?.winPercent ??
-      100 - winFromEval(await engine.analyze(fens[i + 1]!, { depth: deepDepth, multiPv: 1, movetimeMs: deepMaxMs }), fens[i + 1]!);
+    let winAfter: number;
+    let refutation: string[];
+    if (played) {
+      winAfter = played.winPercent;
+      refutation = played.pv.slice(1);
+    } else {
+      const after = await engine.analyze(fens[i + 1]!, { depth: deepDepth, multiPv: 1, movetimeMs: deepMaxMs });
+      winAfter = 100 - winFromEval(after, fens[i + 1]!);
+      refutation = after.lines[0]?.pv ?? [];
+    }
     const drop = Math.max(0, winBefore - winAfter);
     moves[i] = {
       ...mv,
@@ -151,6 +166,7 @@ export async function analyzeGame(game: ChessComGame, username: string, engine: 
       drop,
       label: top[0]?.move === mv.uci ? "best" : labelForDrop(drop),
       deep: true,
+      refutation,
     };
   }
 
@@ -177,7 +193,7 @@ export async function analyzeGame(game: ChessComGame, username: string, engine: 
 function cachePath(cacheDir: string, game: ChessComGame, engineName: string): string {
   const { fastDepth, deepDepth, deepMaxMs, multiPv } = config.engine;
   const engineSlug = engineName.replace(/[^a-z0-9.]+/gi, "-");
-  return join(cacheDir, `${gameIdOf(game)}_${engineSlug}_d${fastDepth}-${deepDepth}-${deepMaxMs}ms_pv${multiPv}.json`);
+  return join(cacheDir, `${gameIdOf(game)}_${engineSlug}_d${fastDepth}-${deepDepth}-${deepMaxMs}ms_pv${multiPv}_v2.json`);
 }
 
 /** analyzeGame with a permanent on-disk cache. Never re-analyzes a game. */
