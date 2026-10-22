@@ -114,6 +114,8 @@ export interface TrainingProgress {
   checkpoints: Record<string, CheckpointProgress>;
   /** Drills left before the next checkpoint (10–15 after each checkpoint). */
   drillsUntilCheckpoint: number;
+  /** Size of the current gap (10–15), for the progress tracker. */
+  gapSize?: number;
   sessions: number;
   bestStreak: number;
 }
