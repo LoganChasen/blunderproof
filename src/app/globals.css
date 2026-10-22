@@ -1,1 +1,81 @@
 @import "tailwindcss";
+
+/*
+ * Blunderproof design tokens. The layout is modeled on a dark chess-site UI,
+ * with a blue accent instead of the usual green. Use these through the
+ * Tailwind utilities below (bg-surface, text-muted, bg-accent, etc.) rather
+ * than raw hex values.
+ */
+:root {
+  --bg: #2b2a27; /* page background */
+  --surface: #262421; /* sidebar, panels */
+  --surface-2: #3a3835; /* raised cards, inputs, hover */
+  --surface-3: #4b4844; /* pressed/hover on raised */
+  --border: #403e3a;
+  --text: #ffffff;
+  --text-muted: #c4c3c1;
+  --text-faint: #8f8d8a;
+
+  --accent: #3b8ee8; /* primary blue */
+  --accent-hover: #55a0f2;
+  --accent-shade: #2465ad; /* bottom "3D" edge of primary buttons */
+  --accent-soft: rgb(59 142 232 / 0.16);
+
+  --success: #7fb43f; /* correct move */
+  --success-shade: #4f7a24;
+  --danger: #e4554a; /* wrong move / blunder */
+  --danger-shade: #a3362e;
+  --warning: #f2b33d; /* mistake */
+  --info: #63b4f4; /* inaccuracy */
+
+  --board-light: #e4ebf2;
+  --board-dark: #7a98bb;
+  --highlight-move: rgb(255 214 79 / 0.55); /* last-move squares */
+  --highlight-select: rgb(59 142 232 / 0.55);
+  --highlight-good: rgb(127 180 63 / 0.7);
+  --highlight-bad: rgb(228 85 74 / 0.7);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-faint: var(--text-faint);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-shade: var(--accent-shade);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-success-shade: var(--success-shade);
+  --color-danger: var(--danger);
+  --color-danger-shade: var(--danger-shade);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --font-sans: "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+/* Thin dark scrollbars, like a chess site's move list. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-3) transparent;
+}
