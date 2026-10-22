@@ -1,9 +1,9 @@
 import { spawn, type ChildProcessWithoutNullStreams } from "node:child_process";
 import { createInterface } from "node:readline";
-import { config } from "./config.js";
-import { parseInfoLine, type AnalyzeOptions, type EngineLine, type EvalResult, type UciEngine } from "./uci.js";
+import { config } from "./config";
+import { parseInfoLine, type AnalyzeOptions, type EngineLine, type EvalResult, type UciEngine } from "./uci";
 
-export { parseInfoLine, type AnalyzeOptions, type EngineLine, type EvalResult, type UciEngine } from "./uci.js";
+export { parseInfoLine, type AnalyzeOptions, type EngineLine, type EvalResult, type UciEngine } from "./uci";
 
 /**
  * Thin wrapper around a native Stockfish process speaking UCI.

@@ -1,10 +1,10 @@
-import { detectBackRank } from "./backRank.js";
-import { detectHangingPiece } from "./hangingPiece.js";
-import { detectMissedCapture } from "./missedCapture.js";
-import { detectMissedMate } from "./missedMate.js";
-import type { BlunderContext, Detector, Pattern } from "./types.js";
+import { detectBackRank } from "./backRank";
+import { detectHangingPiece } from "./hangingPiece";
+import { detectMissedCapture } from "./missedCapture";
+import { detectMissedMate } from "./missedMate";
+import type { BlunderContext, Detector, Pattern } from "./types";
 
-export type { BlunderContext, Pattern } from "./types.js";
+export type { BlunderContext, Pattern } from "./types";
 
 export const PATTERN_LABEL: Record<Pattern, string> = {
   "missed-mate": "Missed mate",

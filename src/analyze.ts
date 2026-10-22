@@ -1,9 +1,9 @@
 import { Chess } from "chess.js";
-import { config } from "./config.js";
-import type { ChessComGame } from "./chesscom.js";
-import type { EngineLine, EvalResult, UciEngine } from "./uci.js";
-import { parsePgn, type Color, type ParsedMove } from "./pgn.js";
-import { scoreToWinPercent, type Score } from "./winPercent.js";
+import { config } from "./config";
+import type { ChessComGame } from "./chesscom";
+import type { EngineLine, EvalResult, UciEngine } from "./uci";
+import { parsePgn, type Color, type ParsedMove } from "./pgn";
+import { scoreToWinPercent, type Score } from "./winPercent";
 
 export type MoveLabel = "best" | "good" | "inaccuracy" | "mistake" | "blunder";
 

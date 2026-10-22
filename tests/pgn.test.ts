@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseClock, parsePgn } from "../src/pgn.js";
+import { parseClock, parsePgn } from "../src/pgn";
 import fixture from "./fixtures/chesscom-month.json" with { type: "json" };
 
 describe("pgn parsing", () => {

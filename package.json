@@ -5,7 +5,12 @@
   "scripts": {
     "test": "vitest run",
     "phase0": "tsx scripts/phase0.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "predev": "node scripts/copy-engine.mjs",
+    "prebuild": "node scripts/copy-engine.mjs"
   },
   "repository": {
     "type": "git",

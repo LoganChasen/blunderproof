@@ -2,10 +2,10 @@ import { mkdtemp, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it, vi } from "vitest";
-import { fetchMonth, fetchRecentGames, PlayerNotFoundError } from "../src/chesscom.js";
-import { countFullMoves, filterGames, skipReason } from "../src/filter.js";
+import { fetchMonth, fetchRecentGames, PlayerNotFoundError } from "../src/chesscom";
+import { countFullMoves, filterGames, skipReason } from "../src/filter";
 import fixture from "./fixtures/chesscom-month.json" with { type: "json" };
-import type { ChessComGame } from "../src/chesscom.js";
+import type { ChessComGame } from "../src/chesscom";
 
 const games = fixture.games as ChessComGame[];
 

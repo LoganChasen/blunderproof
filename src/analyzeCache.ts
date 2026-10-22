@@ -1,8 +1,8 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { analysisCacheKey, analyzeGame, type GameAnalysis } from "./analyze.js";
-import type { ChessComGame } from "./chesscom.js";
-import type { UciEngine } from "./uci.js";
+import { analysisCacheKey, analyzeGame, type GameAnalysis } from "./analyze";
+import type { ChessComGame } from "./chesscom";
+import type { UciEngine } from "./uci";
 
 /** analyzeGame with a permanent on-disk cache (Node only). Never re-analyzes a game. */
 export async function analyzeGameCached(

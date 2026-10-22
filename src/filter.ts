@@ -1,5 +1,5 @@
-import { config } from "./config.js";
-import type { ChessComGame } from "./chesscom.js";
+import { config } from "./config";
+import type { ChessComGame } from "./chesscom";
 
 export type SkipReason =
   | "variant"

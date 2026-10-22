@@ -1,7 +1,7 @@
 import { Chess } from "chess.js";
-import { config } from "../config.js";
-import type { Score } from "../winPercent.js";
-import type { Detector } from "./types.js";
+import { config } from "../config";
+import type { Score } from "../winPercent";
+import type { Detector } from "./types";
 
 /** Positive N if the score is a forced mate for the side to move, otherwise null. */
 function mateFor(score: Score | undefined): number | null {

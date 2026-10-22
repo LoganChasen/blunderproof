@@ -1,8 +1,8 @@
 import { execSync } from "node:child_process";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { analyzeGame, labelForDrop } from "../src/analyze.js";
-import { Engine } from "../src/engine.js";
-import type { ChessComGame } from "../src/chesscom.js";
+import { analyzeGame, labelForDrop } from "../src/analyze";
+import { Engine } from "../src/engine";
+import type { ChessComGame } from "../src/chesscom";
 
 describe("labelForDrop", () => {
   it("uses the config thresholds", () => {

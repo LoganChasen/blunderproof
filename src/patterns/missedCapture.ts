@@ -1,6 +1,6 @@
 import { Chess, type Move, type PieceSymbol } from "chess.js";
-import type { BlunderContext, Detector } from "./types.js";
-import { PIECE_NAME, PIECE_VALUE, materialSwing, playLine } from "./helpers.js";
+import type { BlunderContext, Detector } from "./types";
+import { PIECE_NAME, PIECE_VALUE, materialSwing, playLine } from "./helpers";
 
 /** Plies of the engine line we look at before letting captures settle. */
 const WINDOW = 4;

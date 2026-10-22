@@ -1,6 +1,6 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { config } from "./config.js";
+import { config } from "./config";
 
 /** The subset of a Chess.com API game we use. */
 export interface ChessComGame {

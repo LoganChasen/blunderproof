@@ -1,6 +1,6 @@
 import { Chess, type Color, type Move, type PieceSymbol, type Square } from "chess.js";
-import type { BlunderContext, Detector, DetectorResult } from "./types.js";
-import { PIECE_NAME, PIECE_VALUE, describePiece, lineEndsInMate, materialSwing, playLine } from "./helpers.js";
+import type { BlunderContext, Detector, DetectorResult } from "./types";
+import { PIECE_NAME, PIECE_VALUE, describePiece, lineEndsInMate, materialSwing, playLine } from "./helpers";
 
 /** How many opponent moves of the refutation we look at for the capture. */
 const OPPONENT_MOVES_SCANNED = 3;

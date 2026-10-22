@@ -1,5 +1,5 @@
-import type { MoveAnalysis } from "../analyze.js";
-import { lineEndsInMate, materialSwing } from "./helpers.js";
+import type { MoveAnalysis } from "../analyze";
+import { lineEndsInMate, materialSwing } from "./helpers";
 
 /**
  * Rough sub-groups for blunders no detector explains. This is diagnostic only:

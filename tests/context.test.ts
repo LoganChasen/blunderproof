@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { baseTimeMs, clockBucket, gamePhase, moveContext } from "../src/context.js";
+import { baseTimeMs, clockBucket, gamePhase, moveContext } from "../src/context";
 
 const START = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 const MIDDLEGAME = "r1bq1rk1/pp2bppp/2n1pn2/3p4/2PP4/2N1PN2/PP3PPP/R2QKB1R w KQ - 0 14";

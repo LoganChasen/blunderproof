@@ -1,7 +1,7 @@
 import { Chess } from "chess.js";
-import { config } from "./config.js";
-import type { GameAnalysis, MoveAnalysis, TopMove } from "./analyze.js";
-import { materialSwing, playUci } from "./patterns/helpers.js";
+import { config } from "./config";
+import type { GameAnalysis, MoveAnalysis, TopMove } from "./analyze";
+import { materialSwing, playUci } from "./patterns/helpers";
 
 /** How many plies of a line count when measuring "wins material". */
 const MATERIAL_WINDOW_PLIES = 4;

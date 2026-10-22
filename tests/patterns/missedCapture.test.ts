@@ -1,11 +1,11 @@
 import { readFileSync } from "node:fs";
 import { Chess } from "chess.js";
 import { describe, expect, it } from "vitest";
-import type { TopMove } from "../../src/analyze.js";
-import { detectMissedCapture } from "../../src/patterns/missedCapture.js";
-import type { BlunderContext } from "../../src/patterns/types.js";
-import { playLine } from "../../src/patterns/helpers.js";
-import { cpToWinPercent } from "../../src/winPercent.js";
+import type { TopMove } from "../../src/analyze";
+import { detectMissedCapture } from "../../src/patterns/missedCapture";
+import type { BlunderContext } from "../../src/patterns/types";
+import { playLine } from "../../src/patterns/helpers";
+import { cpToWinPercent } from "../../src/winPercent";
 
 /** Build a TopMove from a UCI PV (SAN computed by chess.js). */
 function top(fen: string, pv: string[], score: TopMove["score"]): TopMove {

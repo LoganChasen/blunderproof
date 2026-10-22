@@ -1,9 +1,9 @@
-import type { GameAnalysis, MoveAnalysis } from "./analyze.js";
-import { selectCheckpoints, type Checkpoint } from "./checkpoints.js";
-import { moveContext, type MoveContext } from "./context.js";
-import { classify, PATTERN_LABEL, PATTERN_PHRASE } from "./patterns/index.js";
-import { OTHER_KIND_LABEL, otherKind, type OtherKind } from "./patterns/otherKind.js";
-import type { Pattern } from "./patterns/types.js";
+import type { GameAnalysis, MoveAnalysis } from "./analyze";
+import { selectCheckpoints, type Checkpoint } from "./checkpoints";
+import { moveContext, type MoveContext } from "./context";
+import { classify, PATTERN_LABEL, PATTERN_PHRASE } from "./patterns/index";
+import { OTHER_KIND_LABEL, otherKind, type OtherKind } from "./patterns/otherKind";
+import type { Pattern } from "./patterns/types";
 
 export interface PlayerError {
   gameId: string;

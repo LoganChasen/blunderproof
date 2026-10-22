@@ -1,8 +1,8 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { Chess } from "chess.js";
-import { detectHangingPiece } from "../../src/patterns/hangingPiece.js";
-import type { BlunderContext } from "../../src/patterns/types.js";
+import { detectHangingPiece } from "../../src/patterns/hangingPiece";
+import type { BlunderContext } from "../../src/patterns/types";
 
 /** Builds a context from fenBefore + a UCI move, checking legality with chess.js. */
 function ctx(fenBefore: string, played: string, refutation: string[]): BlunderContext {

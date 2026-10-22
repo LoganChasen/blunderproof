@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cpToWinPercent, negate, scoreToWinPercent } from "../src/winPercent.js";
+import { cpToWinPercent, negate, scoreToWinPercent } from "../src/winPercent";
 
 describe("win percent", () => {
   it("is 50 at an equal position", () => {

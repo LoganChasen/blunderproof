@@ -7,13 +7,13 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { parseArgs } from "node:util";
-import type { GameAnalysis } from "../src/analyze.js";
-import { analyzeGameCached } from "../src/analyzeCache.js";
-import { fetchRecentGames, PlayerNotFoundError } from "../src/chesscom.js";
-import { config } from "../src/config.js";
-import { Engine } from "../src/engine.js";
-import { filterGames } from "../src/filter.js";
-import { buildReport, renderMarkdown, renderTerminal } from "../src/report.js";
+import type { GameAnalysis } from "../src/analyze";
+import { analyzeGameCached } from "../src/analyzeCache";
+import { fetchRecentGames, PlayerNotFoundError } from "../src/chesscom";
+import { config } from "../src/config";
+import { Engine } from "../src/engine";
+import { filterGames } from "../src/filter";
+import { buildReport, renderMarkdown, renderTerminal } from "../src/report";
 
 const { values, positionals } = parseArgs({
   allowPositionals: true,

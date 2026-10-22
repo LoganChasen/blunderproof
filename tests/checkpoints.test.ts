@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import type { MoveAnalysis, TopMove } from "../src/analyze.js";
-import { judgeCheckpoint, passesCheckpoint } from "../src/checkpoints.js";
-import { cpToWinPercent } from "../src/winPercent.js";
+import type { MoveAnalysis, TopMove } from "../src/analyze";
+import { judgeCheckpoint, passesCheckpoint } from "../src/checkpoints";
+import { cpToWinPercent } from "../src/winPercent";
 
 function top(move: string, san: string, cp: number, pv: string[] = [move]): TopMove {
   return { move, san, score: { cp }, winPercent: cpToWinPercent(cp), pv };

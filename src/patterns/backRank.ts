@@ -1,6 +1,6 @@
 import { Chess, type Color, type Move, type Square } from "chess.js";
-import { materialSwing, playLine, playUci, PIECE_NAME } from "./helpers.js";
-import type { BlunderContext, Detector } from "./types.js";
+import { materialSwing, playLine, playUci, PIECE_NAME } from "./helpers";
+import type { BlunderContext, Detector } from "./types";
 
 /** Longest refutation (in plies) we accept as a "back-rank mate" line. */
 const MAX_MATE_PLIES = 11;

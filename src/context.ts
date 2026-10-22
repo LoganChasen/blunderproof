@@ -1,5 +1,5 @@
 import { Chess } from "chess.js";
-import { config } from "./config.js";
+import { config } from "./config";
 
 export type GamePhase = "opening" | "middlegame" | "endgame";
 

@@ -1,9 +1,9 @@
 import { readFileSync } from "node:fs";
 import { Chess, validateFen } from "chess.js";
 import { describe, expect, it } from "vitest";
-import { detectBackRank } from "../../src/patterns/backRank.js";
-import { lineEndsInMate } from "../../src/patterns/helpers.js";
-import type { BlunderContext } from "../../src/patterns/types.js";
+import { detectBackRank } from "../../src/patterns/backRank";
+import { lineEndsInMate } from "../../src/patterns/helpers";
+import type { BlunderContext } from "../../src/patterns/types";
 
 /** Build a context from fenBefore + played move; fenAfter is derived and both FENs are validated. */
 function ctx(fenBefore: string, played: string, refutation: string[], winAfter = 0): BlunderContext {

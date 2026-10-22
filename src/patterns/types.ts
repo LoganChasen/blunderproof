@@ -1,4 +1,4 @@
-import type { TopMove } from "../analyze.js";
+import type { TopMove } from "../analyze";
 
 export type Pattern = "missed-mate" | "back-rank" | "hanging-piece" | "missed-capture" | "other";
 

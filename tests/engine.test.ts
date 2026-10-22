@@ -1,6 +1,6 @@
 import { execSync } from "node:child_process";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { Engine, parseInfoLine } from "../src/engine.js";
+import { Engine, parseInfoLine } from "../src/engine";
 
 describe("parseInfoLine", () => {
   it("parses a multipv cp line", () => {

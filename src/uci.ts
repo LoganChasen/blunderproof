@@ -1,4 +1,4 @@
-import type { Score } from "./winPercent.js";
+import type { Score } from "./winPercent";
 
 /** One of the engine's top lines. Score is from the side-to-move's perspective. */
 export interface EngineLine {

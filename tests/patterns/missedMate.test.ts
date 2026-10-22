@@ -1,8 +1,8 @@
 import { Chess } from "chess.js";
 import { describe, expect, it } from "vitest";
-import { detectMissedMate } from "../../src/patterns/missedMate.js";
-import type { BlunderContext } from "../../src/patterns/types.js";
-import type { TopMove } from "../../src/analyze.js";
+import { detectMissedMate } from "../../src/patterns/missedMate";
+import type { BlunderContext } from "../../src/patterns/types";
+import type { TopMove } from "../../src/analyze";
 import realBlunders from "../fixtures/real-blunders.json" with { type: "json" };
 
 function sanOf(fen: string, uci: string): string {

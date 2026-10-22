@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { GameAnalysis } from "../src/analyze.js";
-import { buildReport, plainSummary, renderMarkdown, renderTerminal } from "../src/report.js";
+import type { GameAnalysis } from "../src/analyze";
+import { buildReport, plainSummary, renderMarkdown, renderTerminal } from "../src/report";
 import game from "./fixtures/game-analysis.json" with { type: "json" };
 
 const g = game as unknown as GameAnalysis;
