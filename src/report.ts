@@ -2,6 +2,7 @@ import type { GameAnalysis, MoveAnalysis } from "./analyze.js";
 import { selectCheckpoints, type Checkpoint } from "./checkpoints.js";
 import { moveContext, type MoveContext } from "./context.js";
 import { classify, PATTERN_LABEL, PATTERN_PHRASE } from "./patterns/index.js";
+import { OTHER_KIND_LABEL, otherKind, type OtherKind } from "./patterns/otherKind.js";
 import type { Pattern } from "./patterns/types.js";
 
 export interface PlayerError {
@@ -24,6 +25,8 @@ export interface PlayerError {
   explanation: string | null;
   /** Every pattern that matched, in priority order. */
   allPatterns: Pattern[];
+  /** Diagnostic sub-group, only when pattern is "other". */
+  otherKind: OtherKind | null;
 }
 
 export interface ReportData {
@@ -58,6 +61,7 @@ export function collectErrors(game: GameAnalysis): PlayerError[] {
       pattern: c.primary,
       explanation: c.matches[0]?.explanation ?? null,
       allPatterns: c.matches.map((m) => m.pattern),
+      otherKind: c.primary === "other" ? otherKind(mv) : null,
     });
   }
   return out;
@@ -155,6 +159,11 @@ export function renderMarkdown(r: ReportData): string {
 
   out.push("## Why you blunder", "");
   out.push(breakdownTable("Pattern", tally(blunders.map((b) => PATTERN_LABEL[b.pattern])), blunders.length), "");
+  const others = blunders.filter((b) => b.otherKind);
+  if (others.length) {
+    out.push("### Inside \"other\" (diagnostic: what to detect next)", "");
+    out.push(breakdownTable("Rough type", tally(others.map((b) => OTHER_KIND_LABEL[b.otherKind!])), others.length), "");
+  }
   out.push("## When you blunder", "");
   out.push(breakdownTable("Game phase", tally(blunders.map((b) => b.context.phase)), blunders.length), "");
   out.push(breakdownTable("Clock left", tally(blunders.map((b) => b.context.clockBucket ?? "unknown")), blunders.length), "");
