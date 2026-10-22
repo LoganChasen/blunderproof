@@ -87,3 +87,33 @@ export type TrainingItem =
 export function checkpointId(cp: Pick<Checkpoint, "gameId" | "fen">): string {
   return `${cp.gameId}:${cp.fen.split(" ").slice(0, 4).join(" ")}`;
 }
+
+export type CheckpointStatus = "pending" | "failed" | "conquered";
+
+export interface CheckpointProgress {
+  status: CheckpointStatus;
+  attempts: number;
+  /** UCI moves the user tried, oldest first. */
+  movesTried: string[];
+  lastAttemptAt: string | null;
+}
+
+/**
+ * Per-username training progress, persisted in localStorage under `bp:progress:<username>`.
+ * Written by src/web/training/storage.ts; read by the checkpoints and stats pages.
+ */
+export interface TrainingProgress {
+  version: 1;
+  /** Adaptive puzzle rating (Elo-like), starts from the player's game rating. */
+  puzzleRating: number;
+  puzzlesAttempted: number;
+  puzzlesSolved: number;
+  /** Recently seen Lichess puzzle ids, newest last (capped), to avoid repeats. */
+  seenPuzzleIds: string[];
+  /** Keyed by checkpointId(). Missing = never attempted (pending). */
+  checkpoints: Record<string, CheckpointProgress>;
+  /** Drills left before the next checkpoint (10–15 after each checkpoint). */
+  drillsUntilCheckpoint: number;
+  sessions: number;
+  bestStreak: number;
+}
